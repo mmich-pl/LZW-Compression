@@ -3,4 +3,4 @@ project(LZW_Compression)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(LZW_Compression main.cpp)
+add_executable(LZW_Compression main.cpp include/DictionaryNode.h src/DictionaryNode.cpp)
