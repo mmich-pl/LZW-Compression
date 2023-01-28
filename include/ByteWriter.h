@@ -15,7 +15,7 @@ public:
 
     ~ByteWriter() = default;
 
-    void write_byte(uint32_t byte, int len);
+    void write_byte(uint32_t byte, uint32_t len);
 
     void close();
 };

@@ -2,9 +2,11 @@
 #define LZW_COMPRESSION_ENCODER_H
 
 #include <cstdint>
+#include <fstream>
 #include "DictionaryNode.h"
 #include "Trie.h"
-#include <fstream>
+#include "ByteWriter.h"
+#include "Utils.h"
 
 class Encoder {
 private:

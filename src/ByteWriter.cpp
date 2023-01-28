@@ -2,7 +2,7 @@
 
 ByteWriter::ByteWriter(const std::string &filename) : _file(filename, std::ios::binary) {}
 
-void ByteWriter::write_byte(uint32_t byte, int len)  {
+void ByteWriter::write_byte(uint32_t byte, uint32_t len)  {
     _buffer <<= len;
     _buffer |= byte;
     _buffer_position += len;
