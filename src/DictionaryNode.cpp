@@ -1,7 +1,10 @@
 #include <cassert>
+#include <iostream>
 #include "../include/DictionaryNode.h"
 
-DictionaryNode::DictionaryNode(char character, uint32_t code, bool is_eow) : _symbol(character), _code(code), _eow(is_eow) {}
+DictionaryNode::DictionaryNode(char c, uint32_t code, bool is_eow) : _symbol(c), _code(code), _eow(is_eow) {
+    _childrens.reserve(256);
+}
 
 void DictionaryNode::set_code(uint32_t code) {
     _code = code;
@@ -24,15 +27,15 @@ bool DictionaryNode::is_eow() const {
 }
 
 void DictionaryNode::add_child(DictionaryNode *node) {
-    assert(_children_size < 256);
-    _childrens[_children_size++] = node;
+    assert(_children_size <= 256);
+    _children_size++;
+    _childrens.push_back(node);
 }
 
 DictionaryNode *DictionaryNode::search_child(char character) {
-    auto is_char = [&](DictionaryNode* node) {return *node == character;};
-    auto result = std::find_if(std::begin(_childrens), std::end(_childrens), is_char);
-
-    return (result) ?  *result:  nullptr;
+    auto is_char = [&](DictionaryNode* node) {return node != nullptr && *node == character;};
+    auto result = std::find_if(_childrens.begin(), _childrens.end(),is_char);
+    return (result != _childrens.end()) ? *result : nullptr;
 }
 
 void DictionaryNode::create_eow_node(uint32_t code) {

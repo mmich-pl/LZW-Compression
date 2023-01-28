@@ -1,10 +1,11 @@
+#include <iostream>
 #include "../include/Encoder.h"
 
 uint32_t Encoder::_code = 0;
 
 Encoder::Encoder() {
     _code_size = 32;
-    _max_table_size = ((uint64_t) 1) << _code_size;
+    _max_table_size = (((uint64_t) 1) << _code_size);
 }
 
 void Encoder::init_trie(DictionaryNode *root) {
@@ -19,25 +20,25 @@ void Encoder::encode(const std::string &filename) const {
     DictionaryNode *node;
     std::ifstream file;
     auto fname = filename + std::string(".lzw");
-    auto trie = Trie::get_instance();
+
 
     file.open(filename.c_str(), std::ios::binary|std::ios::out);
     ByteWriter byte_writer(fname);
 
-    auto *root = trie->get_root();
+    auto *root = Trie::get_instance()->get_root();
     init_trie(root);
 
     while (file.get(symbol)) {
         new_word = word + symbol;
 
-        if (trie->search_word(root, new_word)) {
+        if (Trie::get_instance()->search_word(root, new_word)!=nullptr) {
             word = new_word;
         } else {
-            node = trie->search_word(root, word);
+            node = Trie::get_instance()->search_word(root, word);
             byte_writer.write_byte(node->get_code(), bit_size(_code));
 
             if (_code < _max_table_size && !is_overflow) {
-                trie->add_word(root, new_word, _code);
+                Trie::get_instance()->add_word(root, new_word, _code);
                 if (_code != (_max_table_size - 1)) _code++;
                 else is_overflow = true;
             }
@@ -45,7 +46,7 @@ void Encoder::encode(const std::string &filename) const {
         }
     }
 
-    node = trie->search_word(root, word);
+    node = Trie::get_instance()->search_word(root, word);
     byte_writer.write_byte(node->get_code(), bit_size(_code));
 
     Trie::delete_instance();

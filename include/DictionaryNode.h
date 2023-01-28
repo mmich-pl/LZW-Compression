@@ -3,13 +3,14 @@
 
 #include <cstdint>
 #include <algorithm>
+#include <vector>
 
 class DictionaryNode {
 private:
     char _symbol;
     uint32_t _code;
     bool _eow; //is end of word
-    DictionaryNode *_childrens[256];
+    std::vector<DictionaryNode *> _childrens;
     uint32_t _children_size = 0; // amount of children of current node
 
 public:
@@ -33,9 +34,9 @@ public:
 
     void create_eow_node(uint32_t code);
 
-    inline bool operator==(char c) const { return this->get_code() == c; }
+    inline bool operator==(char c) const { return this->get_symbol() == c; }
 
-    inline bool operator==(const DictionaryNode &node) const { return this->get_code() == node.get_code(); }
+    inline bool operator==(const DictionaryNode &node) const { return this->get_symbol() == node.get_code(); }
 };
 
 #endif

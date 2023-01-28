@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../include/Trie.h"
 
 Trie *Trie::_trie = nullptr;
@@ -29,7 +30,7 @@ void Trie::add_word(DictionaryNode *node, std::string word, uint32_t code) {
     auto symbol = word.at(0);
     auto *child = node->search_child(symbol);
 
-    if (!child) {
+    if (child==nullptr) {
         child = new DictionaryNode(symbol);
         node->add_child(child);
     }
@@ -42,5 +43,5 @@ DictionaryNode *Trie::search_word(DictionaryNode *node, std::string word) {
 
     char c = word.at(0);
     auto child = node->search_child(c);
-    return (!child) ? nullptr : search_word(child, word.erase(0, 1));
+    return (child== nullptr) ? nullptr : search_word(child, word.erase(0, 1));
 }
