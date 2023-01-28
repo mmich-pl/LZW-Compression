@@ -1,7 +1,7 @@
 #include <cassert>
 #include "../include/DictionaryNode.h"
 
-DictionaryNode::DictionaryNode(char character, uint32_t code, bool isWord) : _symbol(character), _code(code), _eow(isWord) {}
+DictionaryNode::DictionaryNode(char character, uint32_t code, bool is_eow) : _symbol(character), _code(code), _eow(is_eow) {}
 
 void DictionaryNode::set_code(uint32_t code) {
     _code = code;
@@ -29,8 +29,13 @@ void DictionaryNode::add_child(DictionaryNode *node) {
 }
 
 DictionaryNode *DictionaryNode::search_child(char character) {
-    auto is_char = [&](DictionaryNode* node) {return node->get_symbol() == character;};
+    auto is_char = [&](DictionaryNode* node) {return *node == character;};
     auto result = std::find_if(std::begin(_childrens), std::end(_childrens), is_char);
 
     return (result) ?  *result:  nullptr;
+}
+
+void DictionaryNode::create_eow_node(uint32_t code) {
+    this->set_code(code);
+    this->set_eow(true);
 }

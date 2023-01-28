@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <algorithm>
+
 class DictionaryNode {
 private:
     char _symbol;
@@ -12,7 +13,7 @@ private:
     uint32_t _children_size = 0; // amount of children of current node
 
 public:
-    DictionaryNode(char c = '\0', uint32_t code = 65535, bool word = false);
+    DictionaryNode(char c = '\0', uint32_t code = 65535, bool is_eow = false);
 
     ~DictionaryNode() = default;
 
@@ -29,6 +30,12 @@ public:
     bool is_eow() const;
 
     DictionaryNode *search_child(char c);
+
+    void create_eow_node(uint32_t code);
+
+    inline bool operator==(char c) const { return this->get_code() == c; }
+
+    inline bool operator==(const DictionaryNode &node) const { return this->get_code() == node.get_code(); }
 };
 
 #endif
