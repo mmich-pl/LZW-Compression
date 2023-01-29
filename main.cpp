@@ -1,5 +1,6 @@
 #include <iostream>
 #include "include/Encoder.h"
+#include "include/Decoder.h"
 
 bool file_exists(const std::string &name) {
     if (FILE *file = fopen(name.c_str(), "r")) {
@@ -10,7 +11,7 @@ bool file_exists(const std::string &name) {
     }
 }
 
-void showUsage() {
+void print_manual() {
     std::cerr <<
               "--------- LZW Compressor & Decompressor ---------\n"
               "DESCRIPTION\n"
@@ -26,9 +27,10 @@ void showUsage() {
 }
 
 int main(int argc, char *argv[]) {
-    std::string flag = argv[1];
-    if (flag == "-h" || argc != 3) {
-        showUsage();
+    std::string flag =  argv[1];
+    auto flags = std::vector<std::string>{"-h", "-c", "-d"};
+    if (std::count(flags.begin(), flags.end(), flag)==0 || argc != 3 ) {
+        print_manual();
         return -1;
     }
 
@@ -45,5 +47,11 @@ int main(int argc, char *argv[]) {
         enc->encode(path);
         std::cout << __FUNCTION__ << "(): Encrypting finished";
         delete enc;
+    } else if (flag == "-d") {
+        auto *dec = new Decoder();
+        std::cout << __FUNCTION__ << "(): Decrypting \'" << path << "\'...\n";
+        dec->decode(path);
+        std::cout << __FUNCTION__ << "(): Decrypting finished";
+        delete dec;
     }
 }
