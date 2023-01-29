@@ -7,10 +7,10 @@
 
 class DictionaryNode {
 private:
-    char _symbol;
-    uint32_t _code;
-    bool _eow; //is end of word
-    std::vector<DictionaryNode *> _childrens;
+    char _symbol{};
+    uint32_t _code{};
+    bool _eow{}; //is end of word
+    std::vector<DictionaryNode *> _childrens{};
     uint32_t _children_size = 0; // amount of children of current node
 
 public:

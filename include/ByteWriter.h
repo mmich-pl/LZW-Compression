@@ -11,7 +11,7 @@ private:
     uint32_t _position_write = 0, _buffer_position = 0;
 
 public:
-    ByteWriter(const std::string &filename);
+    explicit ByteWriter(const std::string &filename);
 
     ~ByteWriter() = default;
 
