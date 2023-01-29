@@ -8,12 +8,18 @@ struct AVL_Tree {
 private:
     struct Node {
         Node *parent{}, *left{}, *right{};
-        uint32_t key{}, height{};
+        uint32_t key{};
+        int height{};
         std::string value{};
 
         Node() = default;
 
         ~Node() = default;
+
+        inline auto operator<=>(uint32_t key) const{
+            return this->key <=> key;
+        }
+
     };
 
     int node_count{};
@@ -34,7 +40,7 @@ private:
     static void release_tree(Node *root);
 
 public:
-    AVL_Tree();
+    AVL_Tree() = default;
 
     ~AVL_Tree();
 
@@ -43,6 +49,7 @@ public:
     void insert(uint32_t key, std::string value);
 
     Node *find(uint32_t) const;
+
 
 };
 
