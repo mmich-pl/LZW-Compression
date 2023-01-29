@@ -16,7 +16,7 @@ private:
 
         ~Node() = default;
 
-        inline auto operator<=>(uint32_t key) const{
+        inline auto operator<=>(uint32_t key) const {
             return this->key <=> key;
         }
 
@@ -49,8 +49,6 @@ public:
     void insert(uint32_t key, std::string value);
 
     Node *find(uint32_t) const;
-
-
 };
 
 #endif
