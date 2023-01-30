@@ -3,29 +3,33 @@
 
 #include <cstdint>
 #include <string>
+#include <utility>
 
 struct AVL_Tree {
 private:
     struct Node {
-        Node *parent{}, *left{}, *right{};
+        Node *parent = nullptr, *left = nullptr, *right=nullptr;
         uint32_t key{};
         int height{};
         std::string value{};
 
+        Node(char32_t key, std::string value) : key(key), value(std::move(value)){};
         Node() = default;
 
         ~Node() = default;
 
-        inline auto operator<=>(uint32_t key) const {
-            return this->key <=> key;
+        inline auto operator<=>(Node* node) const {
+            return this->key <=> node->key;
         }
 
     };
 
-    int node_count{};
-    Node *root = nullptr;
+    int _node_count{};
+    Node *_root = nullptr;
 
-    static int get_height(Node *node);
+    static int get_height(const Node *node);
+
+    static int get_higher_branch (const AVL_Tree::Node *node);
 
     static int get_balance_factor(Node *node);
 
