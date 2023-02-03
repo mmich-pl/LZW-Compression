@@ -5,54 +5,48 @@
 #include <string>
 #include <utility>
 
-struct AVL_Tree {
-private:
-    struct Node {
-        Node *parent = nullptr, *left = nullptr, *right=nullptr;
+struct AVLTree {
+    struct AVLNode {
+        AVLNode *parent = nullptr, *left = nullptr, *right = nullptr;
         uint32_t key{};
         int height{};
-        std::string value{};
+        std::string value;
 
-        Node(char32_t key, std::string value) : key(key), value(std::move(value)){};
-        Node() = default;
+        AVLNode(uint32_t key, std::string value) : key(key), value(std::move(value)) {};
 
-        ~Node() = default;
-
-        inline auto operator<=>(Node* node) const {
-            return this->key <=> node->key;
-        }
-
+        AVLNode() = default;
     };
 
     int _node_count{};
-    Node *_root = nullptr;
+    AVLNode *_root = nullptr;
 
-    static int get_height(const Node *node);
+    static int get_higher_branch(const AVLTree::AVLNode *node);
 
-    static int get_higher_branch (const AVL_Tree::Node *node);
+    static int get_height(const AVLNode *node);
 
-    static int get_balance_factor(Node *node);
+    static int get_balance_factor(AVLNode *node);
 
-    void switch_parents(Node *A, Node *B);
+    void switch_parents(AVLNode *A, AVLNode *B);
 
-    void left_rotate(Node *A);
+    void left_rotate(AVLNode *A);
 
-    void right_rotate(Node *A);
+    void right_rotate(AVLNode *A);
 
-    void rebalance(Node *A, Node *B, Node *C);
+    void rebalance(AVLNode *A, AVLNode *B, AVLNode *C);
 
-    static void release_tree(Node *root);
+    static void release_tree(AVLNode *node);
 
 public:
-    AVL_Tree() = default;
 
-    ~AVL_Tree();
+    AVLTree();
+
+    ~AVLTree();
 
     int get_node_count() const;
 
     void insert(uint32_t key, std::string value);
 
-    Node *find(uint32_t) const;
+    AVLNode *find(uint32_t key) const;
 };
 
 #endif

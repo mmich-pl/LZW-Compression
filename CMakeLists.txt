@@ -3,4 +3,5 @@ project(LZW_Compression)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(LZW_Compression main.cpp include/DictionaryNode.h src/DictionaryNode.cpp src/Encoder.cpp include/Encoder.h src/Trie.cpp include/Trie.h src/ByteWriter.cpp include/ByteWriter.h src/Utils.cpp include/Utils.h src/Decoder.cpp include/Decoder.h src/AVL_Tree.cpp include/AVL_Tree.h)
+add_executable(LZW_Compression main.cpp src/DictionaryNode.cpp src/Encoder.cpp src/Trie.cpp
+        src/ByteWriter.cpp src/Utils.cpp src/Decoder.cpp src/AVL_Tree.cpp src/ByteReader.cpp)

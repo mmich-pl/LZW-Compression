@@ -33,7 +33,7 @@ void DictionaryNode::add_child(DictionaryNode *node) {
 }
 
 DictionaryNode *DictionaryNode::search_child(char character) {
-    auto is_char = [&](DictionaryNode* node) {return node != nullptr && *node == character;};
+    auto is_char = [&](DictionaryNode* node) {return node && *node == character;};
     auto result = std::find_if(_childrens.begin(), _childrens.end(),is_char);
     return (result != _childrens.end()) ? *result : nullptr;
 }

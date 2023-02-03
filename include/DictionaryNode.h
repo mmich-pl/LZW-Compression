@@ -6,12 +6,11 @@
 #include <vector>
 
 class DictionaryNode {
-private:
     char _symbol{};
     uint32_t _code{};
     bool _eow{}; //is end of word
     std::vector<DictionaryNode *> _childrens{};
-    uint32_t _children_size = 0; // amount of children of current node
+    int32_t _children_size = 0; // amount of children of current node
 
 public:
     DictionaryNode(char c = '\0', uint32_t code = 65535, bool is_eow = false);
@@ -36,7 +35,6 @@ public:
 
     inline bool operator==(char c) const { return this->get_symbol() == c; }
 
-    inline bool operator==(const DictionaryNode &node) const { return this->get_symbol() == node.get_code(); }
 };
 
 #endif
